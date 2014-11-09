@@ -67,13 +67,14 @@ In the view that's going to validate the captcha
 
 **reCaptcha.__init__(public_key, private_key)**
 
-**reCaptcha.get_code()***
+**reCaptcha.get_code()**
 
-Returns the HTML code to
+Returns the HTML code to implement. But you can use
+**{{recaptcha}}** directly in your template
 
 **reCaptcha.validate()**
 
-Returns bool if validate or not
+Returns bool
 
 ## In Template
 
