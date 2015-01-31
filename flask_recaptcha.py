@@ -3,15 +3,22 @@ Flask-reCaptcha
 """
 
 __NAME__ = "Flask-reCaptcha"
-__version__ = "0.1"
+__version__ = "0.2"
 __license__ = "MIT"
 __author__ = "Mardix"
 __copyright__ = "(c) 2014 Mardix"
 
 import urllib2
 import urllib
-from jinja2 import Markup
-from flask import request
+
+try:
+    from flask import request
+except ImportError as ex:
+    print("Flask is missing")
+try:
+    from jinja2 import Markup
+except ImportError as ex:
+    print("Jinja2 is missing. pip --install jinja2")
 
 API_SSL_SERVER = "https://www.google.com/recaptcha/api"
 API_SERVER = "http://www.google.com/recaptcha/api"
