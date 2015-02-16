@@ -1,6 +1,6 @@
 # Flask-ReCaptcha
 
-A simple recaptcha implementation for Flask without Flask-WTF.
+The new Google ReCaptcha implementation for Flask without Flask-WTF.
 
 ---
 
@@ -58,7 +58,7 @@ In the view that's going to validate the captcha
 
 ## Api
 
-**reCaptcha.__init__(app, public_key, private_key)**
+**reCaptcha.__init__(app, site_key, secret_key)**
 
 **reCaptcha.get_code()**
 

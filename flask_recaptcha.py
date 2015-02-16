@@ -1,5 +1,5 @@
 """
-A Flask implementation of the new Google ReCaptcha without WTF-Form
+The new Google ReCaptcha implementation for Flask without Flask-WTF
 """
 
 __NAME__ = "Flask-ReCaptcha"

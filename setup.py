@@ -10,7 +10,7 @@ setup(
     license=PACKAGE.__license__,
     author=PACKAGE.__author__,
     author_email='mardix@github.com',
-    description="A Flask implementation of the new Google ReCaptcha without WTF-Form",
+    description="The new Google ReCaptcha implementation for Flask without Flask-WTF",
     long_description=PACKAGE.__doc__,
     url='http://github.com/mardix/flask-recaptcha/',
     download_url='http://github.com/mardix/flask-recaptcha/tarball/master',
