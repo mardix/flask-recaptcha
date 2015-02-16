@@ -1,8 +1,6 @@
-# Flask-reCaptcha
+# Flask-ReCaptcha
 
 A simple recaptcha implementation for Flask without Flask-WTF.
-
-Can also be used without Flask
 
 ---
 
@@ -15,16 +13,14 @@ Can also be used without Flask
 ### Implementation view.py
 
     from flask import Flask
-    from flask.ext.recaptcha import reCaptcha
+    from flask_recaptcha import ReCaptcha
 
     app = Flask(__name__)
-    recaptcha = reCaptcha()
+    recaptcha = ReCaptcha(app)
 
-    recaptcha.init_app(app)
+### In your template: **{{ recaptcha }}**
 
-### In your template: **{{recaptcha}}**
-
-Inside of the form you want to protect, include the tag: **{{recaptcha}}**
+Inside of the form you want to protect, include the tag: **{{ recaptcha }}**
 
 It will insert the code auutomatically
 
@@ -33,7 +29,7 @@ It will insert the code auutomatically
         ... your field
         ... your field
 
-        {{recaptcha}}
+        {{ recaptcha }}
 
         [submit button]
     </form>
@@ -43,61 +39,54 @@ It will insert the code auutomatically
 
 In the view that's going to validate the captcha
 
-    from flask import Flask, fl
-    from flask.ext.recaptcha import reCaptcha
+    from flask import Flask
+    from flask_recaptcha import ReCaptcha
 
     app = Flask(__name__)
-    recaptcha = reCaptcha()
-
-    recaptcha.init_app(app)
+    recaptcha = ReCaptcha(app)
 
     @route("/submit", methods=["POST])
     def submit():
 
-        if not recaptcha.validate():
-            # recaptcha failed. Show error message
+        if recaptcha.verify():
+            # SUCCESS
             pass
-
         else:
-            # continue with your process
+            # FAILED
             pass
 
 
 ## Api
 
-**reCaptcha.__init__(public_key, private_key)**
+**reCaptcha.__init__(app, public_key, private_key)**
 
 **reCaptcha.get_code()**
 
 Returns the HTML code to implement. But you can use
-**{{recaptcha}}** directly in your template
+**{{ recaptcha }}** directly in your template
 
-**reCaptcha.validate()**
+**reCaptcha.verfiy()**
 
 Returns bool
 
 ## In Template
 
-Just include **{{recaptcha}}** wherever you want to show the recaptcha
+Just include **{{ recaptcha }}** wherever you want to show the recaptcha
 
 
 ## Config
 
-Flask-reCaptcha is configured through the standard Flask config API.
+Flask-ReCaptcha is configured through the standard Flask config API.
 These are the available options:
 
-**RECAPTCHA_PUBLIC_KEY** : Public key
+**RECAPTCHA_SITE_KEY** : Public key
 
-**RECAPTCHA_PROVATE_KEY**: Private key
+**RECAPTCHA_SECRET_KEY**: Private key
 
-**RECAPTCHA_USE_SSL**: To use SSL
-
-
-    RECAPTCHA_PUBLIC_KEY = ""
-    RECAPTCHA_PRIVATE_KEY = ""
-    RECAPTCHA_USE_SSL = False
+    RECAPTCHA_SITE_KEY = ""
+    RECAPTCHA_SECRET_KEY = ""
 
 ---
 
-(c) 2014 Mardix
+(c) 2015 Mardix
 

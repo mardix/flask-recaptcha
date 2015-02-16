@@ -1,3 +1,7 @@
 
+- 0.3.0
+    - Implement the new google recaptcha
+    - Make use of requests
+
 - Version 0.1.0
     - First version

@@ -1,6 +1,3 @@
-"""
-SESMailer
-"""
 
 from setuptools import setup, find_packages
 import flask_recaptcha
@@ -13,16 +10,17 @@ setup(
     license=PACKAGE.__license__,
     author=PACKAGE.__author__,
     author_email='mardix@github.com',
-    description=PACKAGE.__doc__,
+    description="A Flask implementation of the new Google ReCaptcha without WTF-Form",
     long_description=PACKAGE.__doc__,
     url='http://github.com/mardix/flask-recaptcha/',
     download_url='http://github.com/mardix/flask-recaptcha/tarball/master',
     py_modules=['flask_recaptcha'],
     include_package_data=True,
     install_requires=[
-        "flask"
+        "flask",
+        "requests"
     ],
-    keywords=['flask', 'recaptcha'],
+    keywords=['flask', 'recaptcha', "validate"],
     platforms='any',
     classifiers=[
         'Environment :: Web Environment',
