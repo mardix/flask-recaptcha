@@ -45,7 +45,7 @@ In the view that's going to validate the captcha
     app = Flask(__name__)
     recaptcha = ReCaptcha(app)
 
-    @route("/submit", methods=["POST])
+    @route("/submit", methods=["POST"])
     def submit():
 
         if recaptcha.verify():
