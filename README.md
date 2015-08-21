@@ -66,7 +66,7 @@ In the view that's going to validate the captcha
 
 ## Api
 
-**reCaptcha.__init__(app, site_key, secret_key)**
+**reCaptcha.__init__(app, site_key, secret_key, is_enabled=True)**
 
 **reCaptcha.get_code()**
 
