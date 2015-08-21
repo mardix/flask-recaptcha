@@ -1,4 +1,8 @@
 
+- 0.4.0
+    - Added RECAPTCHA_ENABLED option. When False it will bypass the validation
+    - Some refactoring
+
 - 0.3.0
     - Implement the new google recaptcha
     - Make use of requests

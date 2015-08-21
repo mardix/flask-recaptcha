@@ -2,6 +2,8 @@
 
 The new Google ReCaptcha implementation for Flask without Flask-WTF.
 
+Can also be used as standalone
+
 ---
 
 ## Install
@@ -16,13 +18,19 @@ The new Google ReCaptcha implementation for Flask without Flask-WTF.
     from flask_recaptcha import ReCaptcha
 
     app = Flask(__name__)
-    recaptcha = ReCaptcha(app)
+    recaptcha = ReCaptcha(app=app)
+    
+    #or 
+    
+    recaptcha = Recaptcha()
+    recaptcha.init_app(app)
+    
 
 ### In your template: **{{ recaptcha }}**
 
 Inside of the form you want to protect, include the tag: **{{ recaptcha }}**
 
-It will insert the code auutomatically
+It will insert the code automatically
 
 
     <form method="post" action="/submit">
@@ -43,7 +51,7 @@ In the view that's going to validate the captcha
     from flask_recaptcha import ReCaptcha
 
     app = Flask(__name__)
-    recaptcha = ReCaptcha(app)
+    recaptcha = ReCaptcha(app=app)
 
     @route("/submit", methods=["POST])
     def submit():
@@ -79,10 +87,13 @@ Just include **{{ recaptcha }}** wherever you want to show the recaptcha
 Flask-ReCaptcha is configured through the standard Flask config API.
 These are the available options:
 
+**RECAPTCHA_ENABLED**: Bool - True by default, when False it will bypass validation
+
 **RECAPTCHA_SITE_KEY** : Public key
 
 **RECAPTCHA_SECRET_KEY**: Private key
 
+    RECAPTCHA_ENABLED = True
     RECAPTCHA_SITE_KEY = ""
     RECAPTCHA_SECRET_KEY = ""
 
