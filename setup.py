@@ -9,7 +9,7 @@ setup(
     version=PACKAGE.__version__,
     license=PACKAGE.__license__,
     author=PACKAGE.__author__,
-    author_email='mardix@github.com',
+    author_email='mardix@pylot.io',
     description="The new Google ReCaptcha implementation for Flask without Flask-WTF",
     long_description=PACKAGE.__doc__,
     url='http://github.com/mardix/flask-recaptcha/',
