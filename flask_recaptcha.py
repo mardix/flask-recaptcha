@@ -4,7 +4,7 @@ Can be used as standalone
 """
 
 __NAME__ = "Flask-ReCaptcha"
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 __license__ = "MIT"
 __author__ = "Mardix"
 __copyright__ = "(c) 2015 Mardix"
@@ -21,10 +21,9 @@ class ReCaptcha(object):
     VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
     site_key = None
     secret_key = None
-    is_enabled = True
+    is_enabled = False
 
     def __init__(self, app=None, site_key=None, secret_key=None, is_enabled=True):
-
         if site_key:
             self.site_key = site_key
             self.secret_key = secret_key
@@ -53,17 +52,13 @@ class ReCaptcha(object):
         """.format(SITE_KEY=self.site_key))
 
     def verify(self, response=None, remote_ip=None):
-        if not self.is_enabled:
-            return True
+        if self.is_enabled:
+            data = {
+                "secret": self.secret_key,
+                "response": response or request.form.get('g-recaptcha-response'),
+                "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
+            }
 
-        data = {
-            "secret": self.secret_key,
-            "response": response or request.form.get('g-recaptcha-response'),
-            "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
-        }
-
-        r = requests.get(self.VERIFY_URL, params=data)
-        if r.status_code == 200:
-            return r.json()["success"]
-        else:
-            return False
+            r = requests.get(self.VERIFY_URL, params=data)
+            return r.json()["success"] if r.status_code == 200 else False
+        return True

@@ -1,3 +1,6 @@
+- 0.4.1
+    - Added Py.Test
+    - more refactoring
 
 - 0.4.0
     - Added RECAPTCHA_ENABLED option. When False it will bypass the validation
