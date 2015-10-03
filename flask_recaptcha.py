@@ -16,6 +16,10 @@ try:
 except ImportError as ex:
     print("Missing dependencies")
 
+from google.appengine.api import urlfetch
+import urllib
+import json
+
 class ReCaptcha(object):
 
     VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
@@ -58,7 +62,18 @@ class ReCaptcha(object):
                 "response": response or request.form.get('g-recaptcha-response'),
                 "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
             }
+            form_data = urllib.urlencode(data)
+            
 
-            r = requests.get(self.VERIFY_URL, params=data)
-            return r.json()["success"] if r.status_code == 200 else False
+            result = urlfetch.fetch(url=self.VERIFY_URL,
+                                    payload=form_data,
+                                    method=urlfetch.POST,
+                                    headers={'Content-Type': 'application/x-www-form-urlencoded'})
+            #r = requests.get(self.VERIFY_URL, params=data)
+            if result.status_code == 200:
+                result_obj = json.loads(result.content)
+                
+                return result_obj["success"]  
+            else:
+                return False
         return True
