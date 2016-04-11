@@ -93,9 +93,23 @@ These are the available options:
 
 **RECAPTCHA_SECRET_KEY**: Private key
 
+The following are **Optional** arguments.
+
+**RECAPTCHA_THEME**: String - Theme can be 'light'(default) or 'dark'
+
+**RECAPTCHA_TYPE**: String - Type of recaptcha can be 'image'(default) or 'audio'
+
+**RECAPTCHA_SIZE**: String - Size of the image can be 'normal'(default) or 'compact'
+
+**RECAPTCHA_TABINDEX**: Int - Tabindex of the widget can be used, if the page uses tabidex, to make navigation easier. Defaults to 0
+
     RECAPTCHA_ENABLED = True
     RECAPTCHA_SITE_KEY = ""
     RECAPTCHA_SECRET_KEY = ""
+    RECAPTCHA_THEME = "dark"
+    RECAPTCHA_TYPE = "image"
+    RECAPTCHA_SIZE = "compact"
+    RECAPTCHA_RTABINDEX = 10
 
 ---
 
