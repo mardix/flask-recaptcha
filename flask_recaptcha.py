@@ -4,7 +4,7 @@ Can be used as standalone
 """
 
 __NAME__ = "Flask-ReCaptcha"
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 __license__ = "MIT"
 __author__ = "Mardix"
 __copyright__ = "(c) 2015 Mardix"
@@ -16,6 +16,15 @@ try:
 except ImportError as ex:
     print("Missing dependencies")
 
+
+class DEFAULTS(object):
+    IS_ENABLED = True
+    THEME = "light"
+    TYPE = "image"
+    SIZE = "normal"
+    TABINDEX = 0
+
+
 class ReCaptcha(object):
 
     VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
@@ -23,11 +32,15 @@ class ReCaptcha(object):
     secret_key = None
     is_enabled = False
 
-    def __init__(self, app=None, site_key=None, secret_key=None, is_enabled=True):
+    def __init__(self, app=None, site_key=None, secret_key=None, is_enabled=True, **kwargs):
         if site_key:
             self.site_key = site_key
             self.secret_key = secret_key
             self.is_enabled = is_enabled
+            self.theme = kwargs.get('theme', DEFAULTS.THEME)
+            self.type = kwargs.get('type', DEFAULTS.TYPE)
+            self.size = kwargs.get('size', DEFAULTS.SIZE)
+            self.tabindex = kwargs.get('tabindex', DEFAULTS.TABINDEX)
 
         elif app:
             self.init_app(app=app)
@@ -35,7 +48,11 @@ class ReCaptcha(object):
     def init_app(self, app=None):
         self.__init__(site_key=app.config.get("RECAPTCHA_SITE_KEY"),
                       secret_key=app.config.get("RECAPTCHA_SECRET_KEY"),
-                      is_enabled=app.config.get("RECAPTCHA_ENABLED", True))
+                      is_enabled=app.config.get("RECAPTCHA_ENABLED", DEFAULTS.IS_ENABLED),
+                      theme=app.config.get("RECAPTCHA_THEME", DEFAULTS.THEME),
+                      type=app.config.get("RECAPTCHA_TYPE", DEFAULTS.TYPE),
+                      size=app.config.get("RECAPTCHA_SIZE", DEFAULTS.SIZE),
+                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX))
 
         @app.context_processor
         def get_code():
@@ -48,8 +65,9 @@ class ReCaptcha(object):
         """
         return "" if not self.is_enabled else ("""
         <script src='//www.google.com/recaptcha/api.js'></script>
-        <div class="g-recaptcha" data-sitekey="{SITE_KEY}"></div>
-        """.format(SITE_KEY=self.site_key))
+        <div class="g-recaptcha" data-sitekey="{SITE_KEY}" data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
+         data-tabindex="{TABINDEX}"></div>
+        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
 
     def verify(self, response=None, remote_ip=None):
         if self.is_enabled:
