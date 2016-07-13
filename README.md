@@ -109,7 +109,7 @@ The following are **Optional** arguments.
     RECAPTCHA_THEME = "dark"
     RECAPTCHA_TYPE = "image"
     RECAPTCHA_SIZE = "compact"
-    RECAPTCHA_RTABINDEX = 10
+    RECAPTCHA_TABINDEX = 10
 
 ---
 
