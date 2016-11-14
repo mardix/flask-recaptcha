@@ -4,7 +4,7 @@ Can be used as standalone
 """
 
 __NAME__ = "Flask-ReCaptcha"
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 __license__ = "MIT"
 __author__ = "Mardix"
 __copyright__ = "(c) 2015 Mardix"
