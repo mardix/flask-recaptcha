@@ -81,6 +81,9 @@ Returns bool
 
 Just include **{{ recaptcha }}** wherever you want to show the recaptcha
 
+Additionally, you can use the syntax **{{ recaptcha_callback() }}**
+or **{{ recaptcha_callback(callback="some_callback_function") }}**
+to use JavaScript callback function (default name - 'recaptcha_callback').
 
 ## Config
 
@@ -109,7 +112,7 @@ The following are **Optional** arguments.
     RECAPTCHA_THEME = "dark"
     RECAPTCHA_TYPE = "image"
     RECAPTCHA_SIZE = "compact"
-    RECAPTCHA_RTABINDEX = 10
+    RECAPTCHA_TABINDEX = 10
 
 ---
 

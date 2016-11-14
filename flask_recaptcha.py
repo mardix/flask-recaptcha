@@ -4,7 +4,7 @@ Can be used as standalone
 """
 
 __NAME__ = "Flask-ReCaptcha"
-__version__ = "0.4.2"
+__version__ = "0.4.3"
 __license__ = "MIT"
 __author__ = "Mardix"
 __copyright__ = "(c) 2015 Mardix"
@@ -56,18 +56,26 @@ class ReCaptcha(object):
 
         @app.context_processor
         def get_code():
-            return dict(recaptcha=Markup(self.get_code()))
+            def _get_code(callback="recaptcha_callback"):
+                return Markup(self.get_code(callback=callback))
+            return dict(recaptcha=_get_code(callback=None), recaptcha_callback=_get_code)
 
-    def get_code(self):
+    def get_code(self, callback=None):
         """
+        :param callback: adds a JavaScript callback function name
         Returns the new ReCaptcha code
         :return:
         """
+        if callback:
+            data_callback = ' data-callback="{CALLBACK}"'.format(CALLBACK=callback)
+        else:
+            data_callback = ""
         return "" if not self.is_enabled else ("""
         <script src='//www.google.com/recaptcha/api.js'></script>
         <div class="g-recaptcha" data-sitekey="{SITE_KEY}" data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
-         data-tabindex="{TABINDEX}"></div>
-        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
+         data-tabindex="{TABINDEX}"{DATA_CALLBACK}></div>
+        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex,
+                   DATA_CALLBACK=data_callback))
 
     def verify(self, response=None, remote_ip=None):
         if self.is_enabled:
