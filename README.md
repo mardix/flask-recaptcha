@@ -22,7 +22,7 @@ Can also be used as standalone
     
     #or 
     
-    recaptcha = Recaptcha()
+    recaptcha = ReCaptcha()
     recaptcha.init_app(app)
     
 
