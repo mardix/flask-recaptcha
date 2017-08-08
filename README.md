@@ -103,13 +103,19 @@ The following are **Optional** arguments.
 
 **RECAPTCHA_TABINDEX**: Int - Tabindex of the widget can be used, if the page uses tabidex, to make navigation easier. Defaults to 0
 
+**RECAPTCHA_LANGUAGE**: String - You can choose one from the [languages available](https://developers.google.com/recaptcha/docs/language). Default is 'en'
+
+**RECAPTCHA_ASYNC_DEFER**: Bool - Set scripts opcions async and defer available. Default is True
+
     RECAPTCHA_ENABLED = True
     RECAPTCHA_SITE_KEY = ""
     RECAPTCHA_SECRET_KEY = ""
     RECAPTCHA_THEME = "dark"
     RECAPTCHA_TYPE = "image"
     RECAPTCHA_SIZE = "compact"
-    RECAPTCHA_RTABINDEX = 10
+    RECAPTCHA_TABINDEX = 10
+    RECAPTCHA_LANGUAGE = "es"
+    RECAPTCHA_ASYNC_DEFER = False
 
 ---
 

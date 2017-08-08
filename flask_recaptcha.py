@@ -23,6 +23,8 @@ class DEFAULTS(object):
     TYPE = "image"
     SIZE = "normal"
     TABINDEX = 0
+    LANGUAGE = "en"
+    ASYNC_DEFER = True
 
 
 class ReCaptcha(object):
@@ -41,6 +43,8 @@ class ReCaptcha(object):
             self.type = kwargs.get('type', DEFAULTS.TYPE)
             self.size = kwargs.get('size', DEFAULTS.SIZE)
             self.tabindex = kwargs.get('tabindex', DEFAULTS.TABINDEX)
+            self.language = kwargs.get('language', DEFAULTS.LANGUAGE)
+            self.async_defer = kwargs.get('async_defer', DEFAULTS.ASYNC_DEFER)
 
         elif app:
             self.init_app(app=app)
@@ -52,7 +56,9 @@ class ReCaptcha(object):
                       theme=app.config.get("RECAPTCHA_THEME", DEFAULTS.THEME),
                       type=app.config.get("RECAPTCHA_TYPE", DEFAULTS.TYPE),
                       size=app.config.get("RECAPTCHA_SIZE", DEFAULTS.SIZE),
-                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX))
+                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX),
+                      language=app.config.get("RECAPTCHA_LANGUAGE", DEFAULTS.LANGUAGE),
+                      async_defer=app.config.get("RECAPTCHA_ASYNC_DEFER", DEFAULTS.ASYNC_DEFER))
 
         @app.context_processor
         def get_code():
@@ -64,10 +70,16 @@ class ReCaptcha(object):
         :return:
         """
         return "" if not self.is_enabled else ("""
-        <script src='//www.google.com/recaptcha/api.js'></script>
+        <script src='//www.google.com/recaptcha/api.js?hl={LANGUAGE}' {ASYNC_DEFER}></script>
         <div class="g-recaptcha" data-sitekey="{SITE_KEY}" data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
          data-tabindex="{TABINDEX}"></div>
-        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
+        """.format(SITE_KEY=self.site_key,
+                   THEME=self.theme,
+                   TYPE=self.type,
+                   SIZE=self.size,
+                   TABINDEX=self.tabindex,
+                   LANGUAGE=self.language,
+                   ASYNC_DEFER="async defer" if self.async_defer else ""))
 
     def verify(self, response=None, remote_ip=None):
         if self.is_enabled:
