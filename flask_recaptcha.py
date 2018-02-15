@@ -23,6 +23,8 @@ class DEFAULTS(object):
     TYPE = "image"
     SIZE = "normal"
     TABINDEX = 0
+    INVISIBLE = "invisible"
+    ELEMENT_ID = "id_captcha"
 
 
 class ReCaptcha(object):
@@ -41,6 +43,7 @@ class ReCaptcha(object):
             self.type = kwargs.get('type', DEFAULTS.TYPE)
             self.size = kwargs.get('size', DEFAULTS.SIZE)
             self.tabindex = kwargs.get('tabindex', DEFAULTS.TABINDEX)
+            self.element_id = kwargs.get('element_id', DEFAULTS.ELEMENT_ID)
 
         elif app:
             self.init_app(app=app)
@@ -52,7 +55,8 @@ class ReCaptcha(object):
                       theme=app.config.get("RECAPTCHA_THEME", DEFAULTS.THEME),
                       type=app.config.get("RECAPTCHA_TYPE", DEFAULTS.TYPE),
                       size=app.config.get("RECAPTCHA_SIZE", DEFAULTS.SIZE),
-                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX))
+                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX),
+                      element_id=app.config.get("RECAPTCHA_ELEMENT_ID", DEFAULTS.ELEMENT_ID))
 
         @app.context_processor
         def get_code():
@@ -63,11 +67,49 @@ class ReCaptcha(object):
         Returns the new ReCaptcha code
         :return:
         """
-        return "" if not self.is_enabled else ("""
-        <script src='//www.google.com/recaptcha/api.js'></script>
-        <div class="g-recaptcha" data-sitekey="{SITE_KEY}" data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
-         data-tabindex="{TABINDEX}"></div>
-        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
+        if self.is_enabled:
+            if self.size == DEFAULTS.INVISIBLE:
+                return """
+                    <div id="{ELEMENT_ID}">
+                    </div>
+                    <script>
+                      var recaptchaCallback = function(token) {{
+                        // recaptcha has been processed
+                        var captcha = document.getElementById("{ELEMENT_ID}"),
+                            fields = captcha.getElementsByTagName('textarea');
+                        if(!fields.length) return;
+                        fields[0].value = token;
+                      }};
+                      var recaptchaOnloadCallback = function(){{
+                        var el = document.getElementById("{ELEMENT_ID}"),
+                            widget_id,
+                            opts = [];
+                        opts['sitekey'] = "{SITE_KEY}";
+                        opts['callback'] = 'recaptchaCallback';
+                        opts['size'] = "{SIZE}";
+                        opts['type'] = "{TYPE}";
+                        opts['tabindex'] = "{TABINDEX}";
+                        widget_id = grecaptcha.render(el, opts);
+                        grecaptcha.execute(widget_id);
+                      }};
+                    </script>
+                    <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaOnloadCallback&render=explicit" async defer></script>
+                    """.format(SITE_KEY=self.site_key,
+                               SIZE=self.size,
+                               ELEMENT_ID=self.element_id,
+                               TABINDEX=self.tabindex,
+                               TYPE=self.type
+                               )
+            else:
+                return """
+                    <script src='//www.google.com/recaptcha/api.js'></script>
+                    <div class="g-recaptcha" data-sitekey="{SITE_KEY}"\
+                    data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
+                    data-tabindex="{TABINDEX}"></div>
+                """.format(SITE_KEY=self.site_key, THEME=self.theme,
+                           TYPE=self.type, SIZE=self.size,
+                           TABINDEX=self.tabindex)
+        return ""
 
     def verify(self, response=None, remote_ip=None):
         if self.is_enabled:
