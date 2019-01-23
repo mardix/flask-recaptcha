@@ -73,7 +73,7 @@ In the view that's going to validate the captcha
 Returns the HTML code to implement. But you can use
 **{{ recaptcha }}** directly in your template
 
-**reCaptcha.verfiy()**
+**reCaptcha.verify()**
 
 Returns bool
 
