@@ -23,6 +23,7 @@ class DEFAULTS(object):
     TYPE = "image"
     SIZE = "normal"
     TABINDEX = 0
+    SCRIPT_ARGS = ""
 
 
 class ReCaptcha(object):
@@ -41,6 +42,7 @@ class ReCaptcha(object):
             self.type = kwargs.get('type', DEFAULTS.TYPE)
             self.size = kwargs.get('size', DEFAULTS.SIZE)
             self.tabindex = kwargs.get('tabindex', DEFAULTS.TABINDEX)
+            self.script_args = kwargs.get('script_args', DEFAULTS.TABINDEX)
 
         elif app:
             self.init_app(app=app)
@@ -52,7 +54,8 @@ class ReCaptcha(object):
                       theme=app.config.get("RECAPTCHA_THEME", DEFAULTS.THEME),
                       type=app.config.get("RECAPTCHA_TYPE", DEFAULTS.TYPE),
                       size=app.config.get("RECAPTCHA_SIZE", DEFAULTS.SIZE),
-                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX))
+                      tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX),
+                      script_args=app.config.get("RECAPTCHA_SCRIPT_ARGS", DEFAULTS.SCRIPT_ARGS))
 
         @app.context_processor
         def get_code():
@@ -64,10 +67,10 @@ class ReCaptcha(object):
         :return:
         """
         return "" if not self.is_enabled else ("""
-        <script src='//www.google.com/recaptcha/api.js'></script>
+        <script src='//www.google.com/recaptcha/api.js?{SCRIPT_ARGS}'></script>
         <div class="g-recaptcha" data-sitekey="{SITE_KEY}" data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
          data-tabindex="{TABINDEX}"></div>
-        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
+        """.format(SCRIPT_ARGS=self.script_args, SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
 
     def verify(self, response=None, remote_ip=None):
         if self.is_enabled:
