@@ -1,3 +1,6 @@
+- 0.5.0
+    - Added RECAPTCHA_LANGUAGE option. Defaults to english but can be updated according to preferred language.
+
 - 0.4.1
     - Added Py.Test
     - more refactoring
