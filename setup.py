@@ -9,7 +9,7 @@ setup(
     version=PACKAGE.__version__,
     license=PACKAGE.__license__,
     author=PACKAGE.__author__,
-    author_email='mardix@pylot.io',
+    author_email='max@maxlevine.co.uk',
     description="The new xCaptcha implementation for Flask without Flask-WTF",
     long_description=PACKAGE.__doc__,
     url='https://github.com/benjilev08/flask-recaptcha',
