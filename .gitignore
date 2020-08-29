@@ -1,5 +1,6 @@
 *.py[co]
 __pycache__*
+venv
 
 # Packages
 *.egg
@@ -18,6 +19,9 @@ MANIFEST
 # PyCharm
 .idea/*
 .idea/libraries/sass_stdlib.xml
+
+# VS Code
+.vscode
 
 # Distribution
 dist/*
