@@ -12,8 +12,8 @@ setup(
     author_email='max@maxlevine.co.uk',
     description="The new xCaptcha implementation for Flask without Flask-WTF",
     long_description=PACKAGE.__doc__,
-    url='https://github.com/benjilev08/flask-recaptcha',
-    download_url='https://github.com/benjilev08/flask-recaptcha/tarball/master',
+    url='https://github.com/benjilev08/flask-xcaptcha',
+    download_url='https://github.com/benjilev08/flask-xcaptcha/tarball/master',
     py_modules=['flask_xcaptcha'],
     include_package_data=True,
     install_requires=[
