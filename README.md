@@ -71,9 +71,9 @@ XCAPTCHA_VERIFY_URL | The URL to verify the filled in xCaptcha at | URL | "https
 XCAPTCHA_API_URL    | The URL of the xCaptcha API JS script | URL | "//www.google.com/recaptcha/api.js" | Optional
 XCAPTCHA_DIV_CLASS  | The class of the div element surrounding the xCaptcha | string | "g-recaptcha" | Optional
 
-### In your template: **{{ xcaptcha }}**
+### In your template: `{{ xcaptcha }}`
 
-Inside of the form you want to protect, include the tag: **{{ xcaptcha }}**
+Inside of the form you want to protect, include the tag: `{{ xcaptcha }}`
 
 It will insert the code automatically
 
@@ -116,19 +116,19 @@ def submit():
 
 ## Api
 
-### XCaptcha.__init__(app, site_key, secret_key, is_enabled=True)**
+### XCaptcha.__init__(app, site_key, secret_key, is_enabled=True)
 
-### XCaptcha.get_code()**
+### XCaptcha.get_code()
 
 Returns the HTML code to implement. But you can use
-**{{ xcaptcha }}** directly in your template
+`{{ xcaptcha }}` directly in your template
 
-### **XCaptcha.verfiy()**
+### XCaptcha.verfiy()
 
 Returns bool
 
 ## In Template
 
-Just include **{{ xcaptcha }}** wherever you want to show the recaptcha
+Just include `{{ xcaptcha }}` wherever you want to show the recaptcha
 
 (c) 2020 benjilev08
