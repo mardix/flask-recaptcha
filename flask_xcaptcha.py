@@ -1,13 +1,13 @@
 """
-The new Google ReCaptcha implementation for Flask without Flask-WTF
+The new xCaptcha implementation for Flask without Flask-WTF
 Can be used as standalone
 """
 
-__NAME__ = "Flask-ReCaptcha"
-__version__ = "0.4.2"
+__NAME__ = "Flask-xCaptcha"
+__version__ = "0.5.0"
 __license__ = "MIT"
-__author__ = "Mardix"
-__copyright__ = "(c) 2015 Mardix"
+__author__ = "Mardix, benjilev08"
+__copyright__ = "(c) 2020 Mardix, benjilev08"
 
 try:
     from flask import request
@@ -28,7 +28,7 @@ class DEFAULTS(object):
     DIV_CLASS = "g-recaptcha"
 
 
-class ReCaptcha(object):
+class XCaptcha(object):
 
     site_key = None
     secret_key = None
@@ -36,16 +36,16 @@ class ReCaptcha(object):
 
     def __init__(self, app=None, site_key=None, secret_key=None, is_enabled=True, **kwargs):
         if app is not None:
-            self.site_key = app.config.get("RECAPTCHA_SITE_KEY") if site_key is None else site_key
-            self.secret_key = app.config.get('RECAPTCHA_SECRET_KEY') if secret_key is None else secret_key
-            self.is_enabled = app.config.get("RECAPTCHA_ENABLED", DEFAULTS.IS_ENABLED) if is_enabled is None else is_enabled
-            self.theme = app.config.get("RECAPTCHA_THEME", DEFAULTS.THEME) if kwargs.get('theme') is None else kwargs.get('theme')
-            self.type = app.config.get("RECAPTCHA_TYPE", DEFAULTS.TYPE) if kwargs.get('type') is None else kwargs.get('type')
-            self.size = app.config.get("RECAPTCHA_SIZE", DEFAULTS.SIZE) if kwargs.get('size') is None else kwargs.get('size')
-            self.tabindex = app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX) if kwargs.get('tabindex') is None else kwargs.get('tabindex')
-            self.verify_url = app.config.get("RECAPTCHA_VERIFY_URL", DEFAULTS.VERIFY_URL) if kwargs.get('verify_url') is None else kwargs.get('verify_url')
-            self.api_url = app.config.get("RECAPTCHA_API_URL", DEFAULTS.API_URL) if kwargs.get('api_url') is None else kwargs.get('api_url')
-            self.div_class = app.config.get("RECAPTCHA_DIV_CLASS", DEFAULTS.DIV_CLASS) if kwargs.get('div_class') is None else kwargs.get('div_class')
+            self.site_key = app.config.get("XCAPTCHA_SITE_KEY") if site_key is None else site_key
+            self.secret_key = app.config.get('XCAPTCHA_SECRET_KEY') if secret_key is None else secret_key
+            self.is_enabled = app.config.get("XCAPTCHA_ENABLED", DEFAULTS.IS_ENABLED) if is_enabled is None else is_enabled
+            self.theme = app.config.get("XCAPTCHA_THEME", DEFAULTS.THEME) if kwargs.get('theme') is None else kwargs.get('theme')
+            self.type = app.config.get("XCAPTCHA_TYPE", DEFAULTS.TYPE) if kwargs.get('type') is None else kwargs.get('type')
+            self.size = app.config.get("XCAPTCHA_SIZE", DEFAULTS.SIZE) if kwargs.get('size') is None else kwargs.get('size')
+            self.tabindex = app.config.get("XCAPTCHA_TABINDEX", DEFAULTS.TABINDEX) if kwargs.get('tabindex') is None else kwargs.get('tabindex')
+            self.verify_url = app.config.get("XCAPTCHA_VERIFY_URL", DEFAULTS.VERIFY_URL) if kwargs.get('verify_url') is None else kwargs.get('verify_url')
+            self.api_url = app.config.get("XCAPTCHA_API_URL", DEFAULTS.API_URL) if kwargs.get('api_url') is None else kwargs.get('api_url')
+            self.div_class = app.config.get("XCAPTCHA_DIV_CLASS", DEFAULTS.DIV_CLASS) if kwargs.get('div_class') is None else kwargs.get('div_class')
 
         elif site_key is not None:
             self.site_key = site_key
@@ -61,11 +61,11 @@ class ReCaptcha(object):
 
         @app.context_processor
         def get_code():
-            return dict(recaptcha=Markup(self.get_code()))
+            return dict(xcaptcha=Markup(self.get_code()))
 
     def get_code(self):
         """
-        Returns the new ReCaptcha code
+        Returns the new XCaptcha code
         :return:
         """
         return "" if not self.is_enabled else ("""

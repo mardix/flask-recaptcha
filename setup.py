@@ -1,8 +1,8 @@
 
 from setuptools import setup, find_packages
-import flask_recaptcha
+import flask_xcaptcha
 
-PACKAGE = flask_recaptcha
+PACKAGE = flask_xcaptcha
 
 setup(
     name=PACKAGE.__NAME__,
@@ -10,17 +10,17 @@ setup(
     license=PACKAGE.__license__,
     author=PACKAGE.__author__,
     author_email='mardix@pylot.io',
-    description="The new Google ReCaptcha implementation for Flask without Flask-WTF",
+    description="The new xCaptcha implementation for Flask without Flask-WTF",
     long_description=PACKAGE.__doc__,
-    url='http://github.com/mardix/flask-recaptcha/',
-    download_url='http://github.com/mardix/flask-recaptcha/tarball/master',
-    py_modules=['flask_recaptcha'],
+    url='https://github.com/benjilev08/flask-recaptcha',
+    download_url='https://github.com/benjilev08/flask-recaptcha/tarball/master',
+    py_modules=['flask_xcaptcha'],
     include_package_data=True,
     install_requires=[
         "flask",
         "requests"
     ],
-    keywords=['flask', 'recaptcha', "validate"],
+    keywords=['flask', 'recaptcha', 'hcaptcha', 'xcaptcha', "validate"],
     platforms='any',
     classifiers=[
         'Environment :: Web Environment',
