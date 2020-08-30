@@ -14,15 +14,13 @@ This project was forked from [Mardix's Flask-ReCaptcha](https://github.com/mardi
 
 ---
 
-## Install
+## Installation
 
 `pip install flask-xcaptcha`
 
-## Usage
+## Usage - Minimal Implementation
 
-### Minimal Implementation
-
-#### Google ReCaptcha (default)
+### Google ReCaptcha - Using app variable
 
 ```python
 from flask import Flask
@@ -36,7 +34,18 @@ app.config.update(
 xcaptcha = XCaptcha(app=app)
 ```
 
-#### hCaptcha
+### Google ReCaptcha - Without app variable
+
+```python
+from flask_xcaptcha import XCaptcha
+
+xcaptcha = XCaptcha(
+    site_key=#<your_site_key>,
+    secret_key=#<your_secret_key>
+)
+```
+
+### hCaptcha - Using app variable
 
 ```python
 from flask import Flask
@@ -51,6 +60,20 @@ app.config.update(
     XCAPTCHA_DIV_CLASS=h-captcha
 )
 xcaptcha = XCaptcha(app=app)
+```
+
+### hCaptcha - Without app variable
+
+```python
+from flask_xcaptcha import XCaptcha
+
+xcaptcha = XCaptcha(
+    site_key=#<your_site_key>,
+    secret_key=#<your_secret_key>,
+    verify_url=https://hcaptcha.com/siteverify,
+    api_url=https://hcaptcha.com/1/api.js,
+    div_class=h-captcha
+)
 ```
 
 ### App Config Variables
@@ -116,14 +139,13 @@ def submit():
 
 ## API
 
-### XCaptcha.__init__(app=None, site_key=None, secret_key=None, is_enabled=True, **kwargs)
+### XCaptcha.__init__(app=None, site_key=None, secret_key=None, is_enabled=True, theme="light", xtype="image", size="normal", tabindex=0, verify_url="https://www.google.com/recaptcha/api/siteverify", api_url="//www.google.com/recaptcha/api.js", div_class="g-recaptcha",**kwargs)
 
 Initialises the XCaptcha using values set in the app config (if an app is supplied), and otherwise using directly passed arguments
 
 ### XCaptcha.get_code()
 
-Returns the HTML code to implement.
-This is primarily used for testing.
+Returns the HTML code to replace `{{ xcaptcha }}` with.
 
 ### XCaptcha.verify()
 
@@ -133,4 +155,4 @@ Returns a bool indicating whether or not the xCaptcha was successfully completed
 
 This will insert an HTML div element containing the captcha into a Jinja2 template
 
-(c) 2020 benjilev08
+(c) 2020 Max Levine

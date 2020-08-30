@@ -1,3 +1,11 @@
+- 0.5.1
+    - Update author info
+    - API documentation updated and corrected
+    - Usage documentation improved
+    - Improve how XCaptcha.__init__() handles default and passed values
+    - f-strings removed for backwards compatability
+    - Minor refactoring
+
 - 0.5.0
     - Change to allow alternative xCaptcha implementations, such as hCaptcha
     - Rebranded to flask-xcaptcha
