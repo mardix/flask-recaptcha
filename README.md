@@ -114,21 +114,23 @@ def submit():
         pass
 ```
 
-## Api
+## API
 
-### XCaptcha.__init__(app, site_key, secret_key, is_enabled=True)
+### XCaptcha.__init__(app=None, site_key=None, secret_key=None, is_enabled=True, **kwargs)
+
+Initialises the XCaptcha using values set in the app config (if an app is supplied), and otherwise using directly passed arguments
 
 ### XCaptcha.get_code()
 
-Returns the HTML code to implement. But you can use
-`{{ xcaptcha }}` directly in your template
+Returns the HTML code to implement.
+This is primarily used for testing.
 
-### XCaptcha.verfiy()
+### XCaptcha.verify()
 
-Returns bool
+Returns a bool indicating whether or not the xCaptcha was successfully completed
 
-## In Template
+## `{{ xcaptcha }}`
 
-Just include `{{ xcaptcha }}` wherever you want to show the recaptcha
+This will insert an HTML div element containing the captcha into a Jinja2 template
 
 (c) 2020 benjilev08
