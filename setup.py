@@ -1,26 +1,31 @@
 
 from setuptools import setup, find_packages
-import flask_recaptcha
+import flask_xcaptcha
 
-PACKAGE = flask_recaptcha
+PACKAGE = flask_xcaptcha
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name=PACKAGE.__NAME__,
     version=PACKAGE.__version__,
     license=PACKAGE.__license__,
     author=PACKAGE.__author__,
-    author_email='mardix@pylot.io',
-    description="The new Google ReCaptcha implementation for Flask without Flask-WTF",
-    long_description=PACKAGE.__doc__,
-    url='http://github.com/mardix/flask-recaptcha/',
-    download_url='http://github.com/mardix/flask-recaptcha/tarball/master',
-    py_modules=['flask_recaptcha'],
+    author_email='max@maxlevine.co.uk',
+    description="The new xCaptcha implementation for Flask without Flask-WTF",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/benjilev08/flask-xcaptcha',
+    download_url='https://github.com/benjilev08/flask-xcaptcha/tarball/master',
+    py_modules=['flask_xcaptcha'],
     include_package_data=True,
+    packages=find_packages(),
     install_requires=[
         "flask",
         "requests"
     ],
-    keywords=['flask', 'recaptcha', "validate"],
+    keywords=['flask', 'recaptcha', 'hcaptcha', 'xcaptcha', "validate"],
     platforms='any',
     classifiers=[
         'Environment :: Web Environment',

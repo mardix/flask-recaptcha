@@ -1,117 +1,136 @@
-# Flask-ReCaptcha
+# Flask-xCaptcha
 
-The new Google ReCaptcha implementation for Flask without Flask-WTF.
+The new xCaptcha implementation for Flask without Flask-WTF.
 
 Can also be used as standalone
+
+Compatible with:
+
+* Google ReCaptcha (default)
+* hCaptcha
+* Any other similarly configured captcha
+
+This project was forked from [Mardix's Flask-ReCaptcha](https://github.com/mardix/flask-recaptcha) project
 
 ---
 
 ## Install
 
-    pip install flask-recaptcha
+`pip install flask-xcaptcha`
 
-# Usage
+## Usage
 
-### Implementation view.py
+### Minimal Implementation
 
-    from flask import Flask
-    from flask_recaptcha import ReCaptcha
+#### Google ReCaptcha (default)
 
-    app = Flask(__name__)
-    recaptcha = ReCaptcha(app=app)
-    
-    #or 
-    
-    recaptcha = Recaptcha()
-    recaptcha.init_app(app)
-    
+```python
+from flask import Flask
+from flask_xcaptcha import XCaptcha
 
-### In your template: **{{ recaptcha }}**
+app = Flask(__name__)
+app.config.update(
+    XCAPTCHA_SITE_KEY=#<your_site_key>,
+    XCAPTCHA_SECRET_KEY=#<your_secret_key>
+)
+xcaptcha = XCaptcha(app=app)
+```
 
-Inside of the form you want to protect, include the tag: **{{ recaptcha }}**
+#### hCaptcha
+
+```python
+from flask import Flask
+from flask_xcaptcha import XCaptcha
+
+app = Flask(__name__)
+app.config.update(
+    XCAPTCHA_SITE_KEY=#<your_site_key>,
+    XCAPTCHA_SECRET_KEY=#<your_secret_key>,
+    XCAPTCHA_VERIFY_URL=https://hcaptcha.com/siteverify,
+    XCAPTCHA_API_URL=https://hcaptcha.com/1/api.js,
+    XCAPTCHA_DIV_CLASS=h-captcha
+)
+xcaptcha = XCaptcha(app=app)
+```
+
+### App Config Variables
+
+Flask-xCaptcha is configured through the standard Flask config API.
+Add these to your app config as shown above to further configure your xCaptcha
+
+Variable            | Description | Allowed Values | Default | Required?
+---                 | ---         | ---            | ---     | ---
+XCAPTCHA_SITE_KEY   | Site key provided by xCaptcha service | Your site key | | Required
+XCAPTCHA_SECRET_KEY | Secret key provided by xCaptcha service | Your secret key | | Required
+XCAPTCHA_ENABLED    | Enable verification. If false, verification will be disabled | True / False | True | Optional
+XCAPTCHA_THEME      | Theme for the xCaptcha element | light / dark (service dependent) | "light" | Optional
+XCAPTCHA_TYPE       | Type of xCaptcha | service dependent | "image" | Optional
+XCAPTCHA_SIZE       | Size of xCaptcha | normal / compact (service dependent) | "normal" | Optional
+XCAPTCHA_TABINDEX   | Set the tabindex of the widget and popup | integer | 0 | Optional
+XCAPTCHA_VERIFY_URL | The URL to verify the filled in xCaptcha at | URL | "https://www.google.com/recaptcha/api/siteverify" | Optional
+XCAPTCHA_API_URL    | The URL of the xCaptcha API JS script | URL | "//www.google.com/recaptcha/api.js" | Optional
+XCAPTCHA_DIV_CLASS  | The class of the div element surrounding the xCaptcha | string | "g-recaptcha" | Optional
+
+### In your template: `{{ xcaptcha }}`
+
+Inside of the form you want to protect, include the tag: `{{ xcaptcha }}`
 
 It will insert the code automatically
 
+```html
+<form method="post" action="/submit">
+    ... your field
+    ... your field
 
-    <form method="post" action="/submit">
-        ... your field
-        ... your field
+    {{ xcaptcha }}
 
-        {{ recaptcha }}
-
-        [submit button]
-    </form>
-
+    [submit button]
+</form>
+```
 
 ### Verify the captcha
 
 In the view that's going to validate the captcha
 
-    from flask import Flask
-    from flask_recaptcha import ReCaptcha
+```python
+from flask import Flask
+from flask_xcaptcha import XCaptcha
 
-    app = Flask(__name__)
-    recaptcha = ReCaptcha(app=app)
+app = Flask(__name__)
+app.config.update(
+    XCAPTCHA_SITE_KEY=#<your_site_key>,
+    XCAPTCHA_SECRET_KEY=#<your_secret_key>
+)
+xcaptcha = XCaptcha(app=app)
 
-    @route("/submit", methods=["POST"])
-    def submit():
+@route("/submit", methods=["POST"])
+def submit():
 
-        if recaptcha.verify():
-            # SUCCESS
-            pass
-        else:
-            # FAILED
-            pass
+    if xcaptcha.verify():
+        # SUCCESS
+        pass
+    else:
+        # FAILED
+        pass
+```
 
+## API
 
-## Api
+### XCaptcha.__init__(app=None, site_key=None, secret_key=None, is_enabled=True, **kwargs)
 
-**reCaptcha.__init__(app, site_key, secret_key, is_enabled=True)**
+Initialises the XCaptcha using values set in the app config (if an app is supplied), and otherwise using directly passed arguments
 
-**reCaptcha.get_code()**
+### XCaptcha.get_code()
 
-Returns the HTML code to implement. But you can use
-**{{ recaptcha }}** directly in your template
+Returns the HTML code to implement.
+This is primarily used for testing.
 
-**reCaptcha.verfiy()**
+### XCaptcha.verify()
 
-Returns bool
+Returns a bool indicating whether or not the xCaptcha was successfully completed
 
-## In Template
+## `{{ xcaptcha }}`
 
-Just include **{{ recaptcha }}** wherever you want to show the recaptcha
+This will insert an HTML div element containing the captcha into a Jinja2 template
 
-
-## Config
-
-Flask-ReCaptcha is configured through the standard Flask config API.
-These are the available options:
-
-**RECAPTCHA_ENABLED**: Bool - True by default, when False it will bypass validation
-
-**RECAPTCHA_SITE_KEY** : Public key
-
-**RECAPTCHA_SECRET_KEY**: Private key
-
-The following are **Optional** arguments.
-
-**RECAPTCHA_THEME**: String - Theme can be 'light'(default) or 'dark'
-
-**RECAPTCHA_TYPE**: String - Type of recaptcha can be 'image'(default) or 'audio'
-
-**RECAPTCHA_SIZE**: String - Size of the image can be 'normal'(default) or 'compact'
-
-**RECAPTCHA_TABINDEX**: Int - Tabindex of the widget can be used, if the page uses tabidex, to make navigation easier. Defaults to 0
-
-    RECAPTCHA_ENABLED = True
-    RECAPTCHA_SITE_KEY = ""
-    RECAPTCHA_SECRET_KEY = ""
-    RECAPTCHA_THEME = "dark"
-    RECAPTCHA_TYPE = "image"
-    RECAPTCHA_SIZE = "compact"
-    RECAPTCHA_RTABINDEX = 10
-
----
-
-(c) 2015 Mardix
-
+(c) 2020 benjilev08

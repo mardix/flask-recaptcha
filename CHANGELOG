@@ -1,3 +1,7 @@
+- 0.5.0
+    - Change to allow alternative xCaptcha implementations, such as hCaptcha
+    - Rebranded to flask-xcaptcha
+
 - 0.4.1
     - Added Py.Test
     - more refactoring
