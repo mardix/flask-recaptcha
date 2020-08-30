@@ -1,6 +1,5 @@
 """
 The new xCaptcha implementation for Flask without Flask-WTF
-Can be used as standalone
 """
 
 __NAME__ = "Flask-xCaptcha"

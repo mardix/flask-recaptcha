@@ -4,6 +4,9 @@ import flask_xcaptcha
 
 PACKAGE = flask_xcaptcha
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name=PACKAGE.__NAME__,
     version=PACKAGE.__version__,
@@ -11,11 +14,13 @@ setup(
     author=PACKAGE.__author__,
     author_email='max@maxlevine.co.uk',
     description="The new xCaptcha implementation for Flask without Flask-WTF",
-    long_description=PACKAGE.__doc__,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/benjilev08/flask-xcaptcha',
     download_url='https://github.com/benjilev08/flask-xcaptcha/tarball/master',
     py_modules=['flask_xcaptcha'],
     include_package_data=True,
+    packages=find_packages(),
     install_requires=[
         "flask",
         "requests"
