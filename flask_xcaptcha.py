@@ -3,7 +3,7 @@ The new xCaptcha implementation for Flask without Flask-WTF
 """
 
 __NAME__ = "Flask-xCaptcha"
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 __license__ = "MIT"
 __author__ = "Max Levine"
 __copyright__ = "(c) 2020 Max Levine"
@@ -54,6 +54,10 @@ class XCaptcha(object):
             self.api_url = app.config.get("XCAPTCHA_API_URL", api_url)
             self.div_class = app.config.get("XCAPTCHA_DIV_CLASS", div_class)
 
+            @app.context_processor
+            def get_code():
+                return dict(xcaptcha=Markup(self.get_code()))
+
         elif site_key is not None:
             self.site_key = site_key
             self.secret_key = secret_key
@@ -65,10 +69,6 @@ class XCaptcha(object):
             self.verify_url = verify_url
             self.api_url = api_url
             self.div_class = div_class
-
-        @app.context_processor
-        def get_code():
-            return dict(xcaptcha=Markup(self.get_code()))
 
     def get_code(self):
         """

@@ -1,5 +1,7 @@
 # Flask-xCaptcha
 
+[![Build Status](https://travis-ci.com/benjilev08/flask-xcaptcha.svg?branch=master)](https://travis-ci.com/benjilev08/flask-xcaptcha)
+
 The new xCaptcha implementation for Flask without Flask-WTF.
 
 Can also be used as standalone

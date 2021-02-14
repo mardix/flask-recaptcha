@@ -1,3 +1,8 @@
+- 0.5.2
+    - Project URL updated
+    - Use Travis CI for testing
+    - Updated python version compatability
+
 - 0.5.1
     - Update author info
     - API documentation updated and corrected
