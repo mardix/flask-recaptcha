@@ -11,7 +11,7 @@ __copyright__ = "(c) 2015 Mardix"
 
 try:
     from flask import request
-    from jinja2 import Markup
+    from markupsafe import Markup
     import requests
 except ImportError as ex:
     print("Missing dependencies")
