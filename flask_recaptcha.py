@@ -4,7 +4,7 @@ Can be used as standalone
 """
 
 __NAME__ = "Flask-ReCaptcha"
-__version__ = "0.4.2"
+__version__ = "0.5.0"
 __license__ = "MIT"
 __author__ = "Mardix"
 __copyright__ = "(c) 2015 Mardix"
@@ -22,6 +22,7 @@ class DEFAULTS(object):
     THEME = "light"
     TYPE = "image"
     SIZE = "normal"
+    LANGUAGE = "en"
     TABINDEX = 0
 
 
@@ -40,6 +41,7 @@ class ReCaptcha(object):
             self.theme = kwargs.get('theme', DEFAULTS.THEME)
             self.type = kwargs.get('type', DEFAULTS.TYPE)
             self.size = kwargs.get('size', DEFAULTS.SIZE)
+            self.language = kwargs.get('language', DEFAULTS.LANGUAGE)
             self.tabindex = kwargs.get('tabindex', DEFAULTS.TABINDEX)
 
         elif app:
@@ -52,6 +54,7 @@ class ReCaptcha(object):
                       theme=app.config.get("RECAPTCHA_THEME", DEFAULTS.THEME),
                       type=app.config.get("RECAPTCHA_TYPE", DEFAULTS.TYPE),
                       size=app.config.get("RECAPTCHA_SIZE", DEFAULTS.SIZE),
+                      language=app.config.get("RECAPTCHA_LANGUAGE", DEFAULTS.LANGUAGE),
                       tabindex=app.config.get("RECAPTCHA_TABINDEX", DEFAULTS.TABINDEX))
 
         @app.context_processor
@@ -64,10 +67,10 @@ class ReCaptcha(object):
         :return:
         """
         return "" if not self.is_enabled else ("""
-        <script src='//www.google.com/recaptcha/api.js'></script>
+        <script src='//www.google.com/recaptcha/api.js?hl={LANGUAGE}'></script>
         <div class="g-recaptcha" data-sitekey="{SITE_KEY}" data-theme="{THEME}" data-type="{TYPE}" data-size="{SIZE}"\
          data-tabindex="{TABINDEX}"></div>
-        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, TABINDEX=self.tabindex))
+        """.format(SITE_KEY=self.site_key, THEME=self.theme, TYPE=self.type, SIZE=self.size, LANGUAGE=self.language, TABINDEX=self.tabindex))
 
     def verify(self, response=None, remote_ip=None):
         if self.is_enabled:

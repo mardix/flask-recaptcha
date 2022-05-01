@@ -101,6 +101,8 @@ The following are **Optional** arguments.
 
 **RECAPTCHA_SIZE**: String - Size of the image can be 'normal'(default) or 'compact'
 
+**RECAPTCHA_LANGUAGE**: String - Language of the recaptcha texts. Defaults to 'en' (english). You can use fa (persian), ar (arabic), fr (french), etc.
+
 **RECAPTCHA_TABINDEX**: Int - Tabindex of the widget can be used, if the page uses tabidex, to make navigation easier. Defaults to 0
 
     RECAPTCHA_ENABLED = True
@@ -109,6 +111,7 @@ The following are **Optional** arguments.
     RECAPTCHA_THEME = "dark"
     RECAPTCHA_TYPE = "image"
     RECAPTCHA_SIZE = "compact"
+    RECAPTCHA_LANGUAGE = "en"
     RECAPTCHA_RTABINDEX = 10
 
 ---
