@@ -1,6 +1,6 @@
 # Flask-xCaptcha
 
-[![Build Status](https://travis-ci.com/benjilev08/flask-xcaptcha.svg?branch=master)](https://travis-ci.com/benjilev08/flask-xcaptcha)
+[![Build Status](https://app.travis-ci.com/bmaximuml/flask-xcaptcha.svg?branch=master)](https://app.travis-ci.com/bmaximuml/flask-xcaptcha)
 
 The new xCaptcha implementation for Flask without Flask-WTF.
 
@@ -157,4 +157,4 @@ Returns a bool indicating whether or not the xCaptcha was successfully completed
 
 This will insert an HTML div element containing the captcha into a Jinja2 template
 
-(c) 2020 Max Levine
+(c) 2022 Max Levine

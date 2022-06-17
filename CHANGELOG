@@ -1,3 +1,6 @@
+- 0.5.3
+    - Markup should be imported from MarkupSafe
+
 - 0.5.2
     - Project URL updated
     - Use Travis CI for testing
@@ -29,3 +32,4 @@
 
 - Version 0.1.0
     - First version
+

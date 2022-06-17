@@ -3,16 +3,19 @@ The new xCaptcha implementation for Flask without Flask-WTF
 """
 
 __NAME__ = "Flask-xCaptcha"
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 __license__ = "MIT"
 __author__ = "Max Levine"
-__copyright__ = "(c) 2020 Max Levine"
+__copyright__ = "(c) 2022 Max Levine"
 
 try:
     from flask import request
-    from jinja2 import Markup
+    try:
+        from jinja2 import Markup
+    except ImportError:
+        from markupsafe import Markup
     import requests
-except ImportError as ex:
+except ImportError:
     print("Missing dependencies")
 
 
