@@ -23,8 +23,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         "flask",
-        "requests"
-        "MarkupSafe"
+        "requests",
+        "MarkupSafe",
     ],
     keywords=['flask', 'recaptcha', 'hcaptcha', 'xcaptcha', "validate"],
     platforms='any',
