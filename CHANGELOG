@@ -1,3 +1,6 @@
+- 0.5.4
+    - Correct sourcing of remote_addr. Asyncronous versions of the request object (e.g. from Quart framework) do not have the *environ* attribute. Sourcing remote_addr in this way prevents the need to access environ, and is more correct anyway.
+
 - 0.5.3
     - Markup should be imported from MarkupSafe
 

@@ -3,7 +3,7 @@ The new xCaptcha implementation for Flask without Flask-WTF
 """
 
 __NAME__ = "Flask-xCaptcha"
-__version__ = "0.5.3"
+__version__ = "0.5.4"
 __license__ = "MIT"
 __author__ = "Max Levine"
 __copyright__ = "(c) 2022 Max Levine"
