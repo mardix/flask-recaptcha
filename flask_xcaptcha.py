@@ -98,9 +98,10 @@ class XCaptcha(object):
             data = {
                 "secret": self.secret_key,
                 "response": response or request.form.get('{}-response'.format(self.div_class)),
-                "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
+                "remoteip": remote_ip or request.remote_addr
             }
 
             r = requests.get(self.verify_url, params=data)
             return r.json()["success"] if r.status_code == 200 else False
         return True
+
