@@ -105,6 +105,8 @@ The following are **Optional** arguments.
 
 **RECAPTCHA_TABINDEX**: Int - Tabindex of the widget can be used, if the page uses tabidex, to make navigation easier. Defaults to 0
 
+**RECAPTCHA_SCRIPT_ARGS**: String - Google reCaptcha api allows a set a arguments that can be passed to api.js, such as a callback function to be executed when it loads. e.g. "onload=onloadCallback
+
     RECAPTCHA_ENABLED = True
     RECAPTCHA_SITE_KEY = ""
     RECAPTCHA_SECRET_KEY = ""
