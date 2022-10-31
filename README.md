@@ -105,6 +105,8 @@ The following are **Optional** arguments.
 
 **RECAPTCHA_TABINDEX**: Int - Tabindex of the widget can be used, if the page uses tabidex, to make navigation easier. Defaults to 0
 
+**RECAPTCHA_SCRIPT_ARGS**: String - Arguments to be passed to www.google.com/recaptcha/api.js . Defaults to empty string. 
+
     RECAPTCHA_ENABLED = True
     RECAPTCHA_SITE_KEY = ""
     RECAPTCHA_SECRET_KEY = ""
@@ -113,7 +115,7 @@ The following are **Optional** arguments.
     RECAPTCHA_SIZE = "compact"
     RECAPTCHA_LANGUAGE = "en"
     RECAPTCHA_RTABINDEX = 10
-
+    RECAPTCHA_SCRIPT_ARGS = "onload=onloadCallback"
 ---
 
 (c) 2015 Mardix
