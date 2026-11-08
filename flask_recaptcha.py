@@ -83,6 +83,6 @@ class ReCaptcha(object):
                 "remoteip": remote_ip or request.environ.get('REMOTE_ADDR')
             }
 
-            r = requests.get(self.VERIFY_URL, params=data)
+            r = requests.get(self.VERIFY_URL, params=data, timeout=30)
             return r.json()["success"] if r.status_code == 200 else False
         return True
